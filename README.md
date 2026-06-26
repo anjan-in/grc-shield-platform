@@ -1,76 +1,75 @@
-# grc-shield-platform
+# React + TypeScript + Vite
 
-Enterprise-grade Governance, Risk, and Compliance (GRC) SaaS platform. Built with React, TypeScript, Redux Toolkit, Tailwind CSS, and Firebase. Features real-time risk matrices, audit management, compliance tracking, and RBAC analytics.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- react
-- typescript
-- redux-toolkit
-- tailwindcss
-- firebase
-- chartjs
-- saas
-- grc
-- compliance
-- audit-management
-- risk-management
-- enterprise-dashboard
-- rbac
-- analytics
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-### Dashboard
+## React Compiler
 
-- Risk Overview
-- Compliance Status
-- KPI Metrics
-- Audit Summary
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Risk Management
+## Expanding the ESLint configuration
 
-- Risk Register
-- Risk Matrix
-- Risk Assessment
-- Risk Tracking
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-### Audit Management
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- Audit Planning
-- Audit Assignments
-- Findings Management
-- Recommendations
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-### Compliance Tracking
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-- Regulatory Controls
-- Compliance Status
-- Violations Tracking
+```
 
-### Analytics
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-- Risk Trends
-- Audit Performance
-- Compliance Trends
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-### Security
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-- RBAC
-- Authentication
-- Audit Logs
-
-## Tech Stack
-
-- React
-- TypeScript
-- Redux Toolkit
-- Tailwind CSS
-- Firebase
-- Chart.js
-
-## Architecture
-
-Frontend → API Layer → Firebase Services
-
-## Deployment
-
-Vercel + Firebase
+```
